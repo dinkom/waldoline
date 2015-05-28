@@ -1,0 +1,1 @@
+Small game for learning basic line slope, built using React.js
