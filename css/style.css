@@ -9,6 +9,12 @@ h2 span {
 	background:#29c;
 }
 
+.explanation {
+	width:300px;
+	text-align: justify;
+	margin:15px auto 30px auto;
+}
+
 #game {
 	width:300px;
 	height:300px;
@@ -38,13 +44,39 @@ h2 span {
 	border-bottom-right-radius: 2px;
 }
 
+#wrong {
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	color:red;
+	text-align: center;
+	font-size: 60px;
+	line-height: 300px;
+	background:rgb(255,255,255);
+	background:rgba(255,255,255,0.7);
+	z-index: 11;
+	border-radius: 3px;
+	display:none;
+}
+
 #controls {
 	width:300px;
-	margin:0 auto 50px auto;
+	margin:0 auto;
 }
 
 #start {
 	width:100%;
+}
+
+#options {
+	display:none;
+}
+
+.option {
+	padding:5px 10px;
+	margin-bottom: 5px;
 }
 
 .ground {

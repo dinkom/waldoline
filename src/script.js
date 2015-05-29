@@ -1,21 +1,37 @@
 $(document).ready(function(){
+	var game = null;
+
 	$('#start').click(function(){
 		var grounds = new Grounds();
 		var man = new Man('the-man');
-		var game = new Game(grounds, man);
+		game = new Game(grounds, man);
 		game.start();
 
-		$(this).hide();
+		$(this).fadeOut(1600);
+	});
+
+	$('.option').click(function(){
+		game.userClicked($(this).attr('name'));
 	});
 });
 
 var Game = function(grounds, man){
 	this.grounds = grounds;
 	this.man = man;
+	this.coords = null;
 
 	this.start = function(){
 		this.man.moveToCenter();
-		var coords = this.grounds.displayRandomGround();
+		this.coords = this.grounds.displayRandomGround();
+	};
+
+	this.userClicked = function(ground) {
+		if (this.grounds.checkAnswer(ground)) {
+			this.man.moveToGround(this.coords);
+		}
+		else {
+			this.grounds.displayWrongAnswer();
+		}
 	};
 };
 
@@ -30,14 +46,20 @@ var Man = function(manId){
 		$('#' + manId).animate({'left': '140px'}, 1000);
 	};
 
+	this.moveToGround = function(coords){
+		$('#' + this.manId).animate({'left': coords['left'], 'top': coords['top']}, 500);
+	};
+
 	this.resetMan = function(){
 		$('#' + this.manId).animate({'left': this.defaults['left'], 'top': this.defaults['top']}, 500);
 	};
 };
 
 var Grounds = function(){
-	this.quantity = 13;
 	this.groundsArray = ['y0', 'x4', 'x2', 'x34', 'yx', 'y32x', 'y2x', 'y-x4', 'y-x2', 'y-x34', 'y-x', 'y-32x', 'y-2x'];
+	this.quantity = 13;
+	this.currentGround = null;
+	this.groundsUsed = [];
 	this.defaults = {
 		'y0': {'top':'147px', 'right':'0', 'left':'258px', 'bottom':'220px'},
 		'x4': {'top':'119px', 'right':'0', 'left':'258px', 'bottom':'220px'},
@@ -54,20 +76,63 @@ var Grounds = function(){
 		'y-2x': {'top':'257px', 'right':'0', 'left':'202px', 'bottom':'260px'},
 	};
 
-	this.cssClass = 'ground';
-
 	this.getRandomGround = function() {
 		var index = Math.floor(Math.random() * this.quantity);
 		return this.groundsArray[index];
 	};
 
 	this.displayRandomGround = function(){
-		var groundId = this.getRandomGround();
-		$('#' + groundId).delay(1000).show("slide", { direction: "right" }, 500);
-		return this.defaults[groundId];
+		var newGroundFound = false;
+		do {
+			var ground = this.getRandomGround();
+			if (this.groundsUsed.indexOf(ground) == -1) {
+				this.groundsUsed.push(ground);
+				this.currentGround = ground;
+				newGroundFound = true;
+			}
+
+		} while(!newGroundFound);
+
+		$('#' + this.currentGround).delay(1000).show("slide", { direction: "right" }, 500);
+		setTimeout(this.displayOptions, 1600);
+		var coords = this.defaults[this.currentGround];
+		var px = coords['top'].substring(0, coords['top'].length - 2);
+		var pxNum = parseInt(px);
+		pxNum -= 30;
+		coords['top'] = pxNum + 'px';
+		return coords;
 	};
 
-	this.resetGrounds = function(){
-		$('.' + this.cssClass).hide();
+	this.clearGround = function(){
+		$('#' + this.currentGround).hide();
+		$('#' + this.currentGround).css({
+			'top': this.defaults[this.currentGround]['top'],
+			'right': this.defaults[this.currentGround]['top'],
+			'bottom': this.defaults[this.currentGround]['top'],
+			'left': this.defaults[this.currentGround]['top'],
+		});
+	};
+
+	this.displayOptions = function(){
+		$('#options').show();
+	};
+
+	this.hideOptions = function(){
+		$('#options').hide();
+	};
+
+	this.checkAnswer = function(ground){
+		return this.currentGround == ground;
+	};
+
+	this.displayWrongAnswer = function(){
+		$('#wrong').fadeIn('fast');
+		$('.option').attr('disabled', 'true');
+		setTimeout(this.hideWrongAnswer, 2000);
+	};
+
+	this.hideWrongAnswer = function(){
+		$('.option').removeAttr('disabled');
+		$('#wrong').fadeOut('fast');
 	};
 };
