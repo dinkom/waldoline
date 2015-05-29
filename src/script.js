@@ -7,7 +7,7 @@ $(document).ready(function(){
 		game = new Game(grounds, man);
 		game.start();
 
-		$(this).fadeOut(1600);
+		$(this).fadeOut(2200);
 	});
 
 	$('.option').click(function(){
@@ -19,15 +19,45 @@ var Game = function(grounds, man){
 	this.grounds = grounds;
 	this.man = man;
 	this.coords = null;
+	this.round = 1;
+	this.rounds = 5;
+	var self = this;
 
 	this.start = function(){
-		this.man.moveToCenter();
-		this.coords = this.grounds.displayRandomGround();
+		this.startRound();
+	};
+
+	this.startRound = function(){
+		if (this.round < this.rounds) {
+			this.displayStartMessage();
+			this.round++;
+			this.man.moveToCenter();
+			this.coords = this.grounds.displayRandomGround();
+		}
+		else {
+			this.endGame();
+		}
+	};
+
+	this.displayStartMessage = function(){
+		$('#round-container').html('Round ' + this.round + ' of ' + this.rounds).show().delay(700).fadeOut(300);
+	};
+
+	this.endGame = function(){
+		$('#round-container').html('Done!').fadeIn('fast');
+		this.grounds.hideOptions();
+		$('#start').show();
 	};
 
 	this.userClicked = function(ground) {
 		if (this.grounds.checkAnswer(ground)) {
 			this.man.moveToGround(this.coords);
+			this.grounds.changeColor('green');
+			this.grounds.clearGround();
+			this.man.resetMan();
+			setTimeout(function(){
+				self.startRound();
+			}, 2800);
 		}
 		else {
 			this.grounds.displayWrongAnswer();
@@ -43,7 +73,7 @@ var Man = function(manId){
 	};
 
 	this.moveToCenter = function(){
-		$('#' + manId).animate({'left': '140px'}, 1000);
+		$('#' + manId).delay(1000).animate({'left': '140px'}, 1000);
 	};
 
 	this.moveToGround = function(coords){
@@ -51,7 +81,7 @@ var Man = function(manId){
 	};
 
 	this.resetMan = function(){
-		$('#' + this.manId).animate({'left': this.defaults['left'], 'top': this.defaults['top']}, 500);
+		$('#' + this.manId).delay(2000).animate({'left': this.defaults['left'], 'top': this.defaults['top']}, 500);
 	};
 };
 
@@ -93,8 +123,8 @@ var Grounds = function(){
 
 		} while(!newGroundFound);
 
-		$('#' + this.currentGround).delay(1000).show("slide", { direction: "right" }, 500);
-		setTimeout(this.displayOptions, 1600);
+		$('#' + this.currentGround).delay(2000).show("slide", { direction: "right" }, 500);
+		setTimeout(this.displayOptions, 2200);
 		var coords = this.defaults[this.currentGround];
 		var px = coords['top'].substring(0, coords['top'].length - 2);
 		var pxNum = parseInt(px);
@@ -104,13 +134,7 @@ var Grounds = function(){
 	};
 
 	this.clearGround = function(){
-		$('#' + this.currentGround).hide();
-		$('#' + this.currentGround).css({
-			'top': this.defaults[this.currentGround]['top'],
-			'right': this.defaults[this.currentGround]['top'],
-			'bottom': this.defaults[this.currentGround]['top'],
-			'left': this.defaults[this.currentGround]['top'],
-		});
+		$('#' + this.currentGround).delay(2000).fadeOut('fast');
 	};
 
 	this.displayOptions = function(){
@@ -134,5 +158,11 @@ var Grounds = function(){
 	this.hideWrongAnswer = function(){
 		$('.option').removeAttr('disabled');
 		$('#wrong').fadeOut('fast');
+	};
+
+	this.changeColor = function(color){
+		switch (color) {
+			case 'green': $('#' + this.currentGround).delay(500).animate({ borderColor: '#9be466' }, 500);
+		}
 	};
 };
