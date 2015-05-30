@@ -25,6 +25,9 @@ var Game = function(grounds, man){
 
 	this.start = function(){
 		this.startRound();
+		if (this.round > 1) {
+			this.grounds.resetColors();
+		}
 	};
 
 	this.startRound = function(){
@@ -163,6 +166,11 @@ var Grounds = function(){
 	this.changeColor = function(color){
 		switch (color) {
 			case 'green': $('#' + this.currentGround).delay(500).animate({ borderColor: '#9be466' }, 500);
+				break;
 		}
+	};
+
+	this.resetColors = function(){
+		$('.ground').css("border-color", "#29c");
 	};
 };
