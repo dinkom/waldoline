@@ -106,125 +106,101 @@ h2 span {
 }
 
 .ground {
+	position:absolute;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 	border:4px solid #29c;
+	display:none;
 }
 
 #y0 {
-	position:absolute;
 	top:147px;
 	right:0;
 	left:258px;
 	bottom:220px;
-	display: none;
 }
 
 #x4 {
-	position:absolute;
 	top:119px;
 	right:0;
 	left:258px;
 	bottom:220px;
-	display: none;
 }
 
 #x2 {
-	position:absolute;
 	top:91px;
 	right:0;
 	left:258px;
 	bottom:225px;
-	display: none;
 }
 
 #x34 {
-	position:absolute;
 	top:64px;
 	right:0;
 	left:258px;
 	bottom:240px;
-	display: none;
 }
 
 #yx {
-	position:absolute;
 	top:37px;
 	right:0;
 	left:258px;
 	bottom:260px;
-	display: none;
 }
 
 #y32x {
-	position:absolute;
 	top:64px;
 	right:0;
 	left:202px;
 	bottom:250px;
-	display: none;
 }
 
 #y2x {
-	position:absolute;
 	top:37px;
 	right:0;
 	left:202px;
 	bottom:260px;
-	display: none;
 }
 
 #y-x4 {
-	position:absolute;
 	top:175px;
 	right:0;
 	left:258px;
 	bottom:220px;
-	display: none;
 }
 
 #y-x2 {
-	position:absolute;
 	top:202px;
 	right:0;
 	left:258px;
 	bottom:225px;
-	display: none;
 }
 
 #y-x34 {
-	position:absolute;
 	top:230px;
 	right:0;
 	left:258px;
 	bottom:240px;
-	display: none;
 }
 
 #y-x {
-	position:absolute;
 	top:257px;
 	right:0;
 	left:258px;
 	bottom:260px;
-	display: none;
 }
 
 #y-32x {
-	position:absolute;
 	top:230px;
 	right:0;
 	left:202px;
 	bottom:250px;
-	display: none;
 }
 
 #y-2x {
-	position:absolute;
 	top:257px;
 	right:0;
 	left:202px;
 	bottom:260px;
-	display: none;
 }
 
