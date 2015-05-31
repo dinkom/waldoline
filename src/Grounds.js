@@ -37,7 +37,6 @@ var Grounds = function(){
 		} while(!newGroundFound);
 
 		$('#' + this.currentGround).delay(2000).show("slide", { direction: "right" }, 500);
-		setTimeout(this.displayOptions, 2200);
 		var coords = this.defaults[this.currentGround];
 		var px = coords['top'].substring(0, coords['top'].length - 2);
 		var pxNum = parseInt(px);

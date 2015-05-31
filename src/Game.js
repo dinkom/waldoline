@@ -7,11 +7,15 @@ var Game = function(grounds, man){
 	this.wrongAnswers = 0;
 	this.startTime = null;
 	this.endTime = null;
+	this.roundInProgress = false;
 	var self = this;
 
 	this.start = function(){
 		this.startTime = new Date();
 		this.startRound();
+		setTimeout(function(){
+			self.grounds.displayOptions();
+		}, 2200);
 		if (this.round > 1) {
 			this.grounds.resetColors();
 		}
@@ -23,6 +27,9 @@ var Game = function(grounds, man){
 			this.round++;
 			this.man.moveToCenter();
 			this.coords = this.grounds.displayRandomGround();
+			setTimeout(function(){
+				self.roundInProgress = true;
+			}, 2200);
 		}
 		else {
 			this.endGame();
@@ -42,18 +49,21 @@ var Game = function(grounds, man){
 	};
 
 	this.userClicked = function(ground) {
-		if (this.grounds.checkAnswer(ground)) {
-			this.man.moveToGround(this.coords);
-			this.grounds.changeColor('green');
-			this.grounds.clearGround();
-			this.man.resetMan();
-			setTimeout(function(){
-				self.startRound();
-			}, 2800);
-		}
-		else {
-			this.grounds.displayWrongAnswer();
-			this.wrongAnswers++;
+		if (this.roundInProgress) {
+			if (this.grounds.checkAnswer(ground)) {
+				this.roundInProgress = false;
+				this.man.moveToGround(this.coords);
+				this.grounds.changeColor('green');
+				this.grounds.clearGround();
+				this.man.resetMan();
+				setTimeout(function(){
+					self.startRound();
+				}, 2800);
+			}
+			else {
+				this.grounds.displayWrongAnswer();
+				this.wrongAnswers++;
+			}
 		}
 	};
 };
