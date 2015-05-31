@@ -1,5 +1,5 @@
 body {
-	background: #eee;
+	background: #eeeee0;      
 }
 
 h2 span {
@@ -61,7 +61,7 @@ h2 span {
 	display:none;
 }
 
-#round-container {
+#round-container, #end-game {
 	position:absolute;
 	top:0;
 	bottom:0;
@@ -69,11 +69,22 @@ h2 span {
 	right:0;
 	font-size: 30px;
 	text-align: center;
-	line-height: 300px;
 	background:rgb(255,255,255);
 	background:rgba(255,255,255,0.7);
 	display: none;
 	z-index: 11;
+}
+
+#round-container {
+	line-height: 300px;
+}
+
+#end-game {
+	padding-top:105px;
+}
+
+#end-game small {
+	font-size: 60%;
 }
 
 #controls {
