@@ -11,6 +11,7 @@ var Game = function(grounds, man){
 	var self = this;
 
 	this.start = function(){
+		$('#end-game').hide();
 		this.startTime = new Date();
 		this.startRound();
 		setTimeout(function(){

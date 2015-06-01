@@ -1,4 +1,4 @@
-body {
+body, .modal-header, .modal-footer {
 	background: #eeeee0;      
 }
 
@@ -7,6 +7,10 @@ h2 span {
 	height: 2px;
 	width: 40px;
 	background:#29c;
+}
+
+.modal-body img {
+	width: 100%;
 }
 
 .explanation {
@@ -59,6 +63,15 @@ h2 span {
 	z-index: 11;
 	border-radius: 3px;
 	display:none;
+}
+
+#tutorial {
+	position:absolute;
+	left:10px;
+	bottom:4px;
+	font-size: 20px;
+	cursor: pointer;
+	color: #999;
 }
 
 #round-container, #end-game {
